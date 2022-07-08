@@ -1,0 +1,4 @@
+RewriteEngine On
+# comment
+RewriteRule ^nouvelle-categorie$ new_categorie.html [L]
+RewriteRule ^nouveau-produit$ new_produit.html [L]
