@@ -8,15 +8,20 @@
             <link rel="stylesheet" href="">
             <style>
                 .notification {
-                    background-color: #f44336;
+                    background-color: #16f071;
                     color: white;
                     padding: 15px;
                     margin-bottom: 15px;
                     position: absolute;
                     width: 100%;
+                    transition: all 2s;
+                    height: 50px;
                 }
                 .hidden {
-                    display: none;
+                    margin-top: -102px;
+                }
+                .notification.alerte {
+                    background-color: #f01616;
                 }
             </style>
         </head>
@@ -44,12 +49,18 @@
             fetch(urlApi + 'categories')
                 .then(response => response.json())
                 .then(response => {
+                    //via template
+                    //let template= ''
                     response.data.forEach(category => {
                         const option = document.createElement('option')
                         option.value = category.id
                         option.innerText = category.label
                         formAddProd.querySelector('.id_categories').appendChild(option)
+                        //via template
+                        //template += `<option value="${category.id}">${category.label}</option>`
                     })
+                    // via template
+                    //formAddProd.querySelector('.id_categories').innerHTML = template
                 })
                 .catch(error => console.log(error))
 
@@ -75,7 +86,16 @@
                     switch(response.code) {
                         case 401:
                             //alert('erreur token')
-                            window.location.href = 'connexion.html'
+                            notification.innerText = "Veuillez vous connecter"
+                            notification.classList.remove('hidden')
+                            notification.classList.add('alerte')
+                            setTimeout(() => {
+                               notification.innerText = ''
+                               notification.classList.add('hidden')
+                               notification.classList.remove('alerte')
+                               window.location.href = 'connexion.html'
+                           }, 3000)
+                            
                             break;
                         case 200:
                            notification.innerText = "Produit ajouté"
