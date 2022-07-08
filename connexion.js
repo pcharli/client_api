@@ -24,12 +24,18 @@ const urlApi = 'http://localhost/ingrwf10/api_php/'
                 headers: {
                     "content-type": "application/json"
                 },
+                //mode:"no-cors",
                 method: 'POST',
                 body: JSON.stringify(
                     ident
                 )
             })
             .then(response => response.json())
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                if(response.code == 200) {
+                    localStorage.setItem('token', response.token)
+                }
+            })
             .catch(error => console.log(error))
         })
